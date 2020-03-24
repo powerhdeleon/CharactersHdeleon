@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="eb5a9f8ecb10410880339e8932ff76ed" Name="Diagram1">
+        <EntityTypeShape EntityType="characterhdeleonModel.character" Width="1.5" PointX="5.25" PointY="8.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="characterhdeleonModel.cstate" Width="1.5" PointX="0.75" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="characterhdeleonModel.location" Width="1.5" PointX="8.25" PointY="9.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="characterhdeleonModel.project" Width="1.5" PointX="3" PointY="13" IsExpanded="true" />
+        <AssociationConnector Association="characterhdeleonModel.fk_character_fater" ManuallyRouted="false" />
+        <AssociationConnector Association="characterhdeleonModel.fk_character_mother" ManuallyRouted="false" />
+        <AssociationConnector Association="characterhdeleonModel.fk_character_project_" ManuallyRouted="false" />
+        <AssociationConnector Association="characterhdeleonModel.fk_character_state" ManuallyRouted="false" />
+        <AssociationConnector Association="characterhdeleonModel.fk_location_state" ManuallyRouted="false" />
+        <AssociationConnector Association="characterhdeleonModel.fk_project_state" ManuallyRouted="false" />
+        <AssociationConnector Association="characterhdeleonModel.fk_location_project" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

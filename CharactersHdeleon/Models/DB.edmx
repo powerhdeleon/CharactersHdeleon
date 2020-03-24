@@ -1,0 +1,416 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="characterhdeleonModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.5" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="character">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_project" Type="int" Nullable="false" />
+          <Property Name="id_state" Type="int" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="description" Type="varchar" MaxLength="10000" Nullable="false" />
+          <Property Name="created_date" Type="datetime" Precision="0" Nullable="false" />
+          <Property Name="id_father" Type="int" />
+          <Property Name="id_mother" Type="int" />
+        </EntityType>
+        <EntityType Name="cstate">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="location">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="description" Type="varchar" MaxLength="1000" Nullable="false" />
+          <Property Name="created_date" Type="datetime" Precision="0" Nullable="false" />
+          <Property Name="id_state" Type="int" Nullable="false" />
+          <Property Name="id_project" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="project">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="id_state" Type="int" Nullable="false" />
+          <Property Name="created_date" Type="datetime" Precision="0" Nullable="false" />
+        </EntityType>
+        <Association Name="fk_character_fater">
+          <End Role="character" Type="Self.character" Multiplicity="0..1" />
+          <End Role="character1" Type="Self.character" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="character">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="character1">
+              <PropertyRef Name="id_father" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_character_mother">
+          <End Role="character" Type="Self.character" Multiplicity="0..1" />
+          <End Role="character1" Type="Self.character" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="character">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="character1">
+              <PropertyRef Name="id_mother" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_character_project_">
+          <End Role="project" Type="Self.project" Multiplicity="1" />
+          <End Role="character" Type="Self.character" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="project">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="character">
+              <PropertyRef Name="id_project" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_character_state">
+          <End Role="cstate" Type="Self.cstate" Multiplicity="1" />
+          <End Role="character" Type="Self.character" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cstate">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="character">
+              <PropertyRef Name="id_state" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_location_project">
+          <End Role="project" Type="Self.project" Multiplicity="1" />
+          <End Role="location" Type="Self.location" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="project">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="location">
+              <PropertyRef Name="id_project" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_location_state">
+          <End Role="cstate" Type="Self.cstate" Multiplicity="1" />
+          <End Role="location" Type="Self.location" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cstate">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="location">
+              <PropertyRef Name="id_state" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_project_state">
+          <End Role="cstate" Type="Self.cstate" Multiplicity="1" />
+          <End Role="project" Type="Self.project" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="cstate">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="project">
+              <PropertyRef Name="id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="characterhdeleonModelStoreContainer">
+          <EntitySet Name="character" EntityType="Self.character" Schema="characterhdeleon" store:Type="Tables" />
+          <EntitySet Name="cstate" EntityType="Self.cstate" Schema="characterhdeleon" store:Type="Tables" />
+          <EntitySet Name="location" EntityType="Self.location" Schema="characterhdeleon" store:Type="Tables" />
+          <EntitySet Name="project" EntityType="Self.project" Schema="characterhdeleon" store:Type="Tables" />
+          <AssociationSet Name="fk_character_fater" Association="Self.fk_character_fater">
+            <End Role="character" EntitySet="character" />
+            <End Role="character1" EntitySet="character" />
+          </AssociationSet>
+          <AssociationSet Name="fk_character_mother" Association="Self.fk_character_mother">
+            <End Role="character" EntitySet="character" />
+            <End Role="character1" EntitySet="character" />
+          </AssociationSet>
+          <AssociationSet Name="fk_character_project_" Association="Self.fk_character_project_">
+            <End Role="project" EntitySet="project" />
+            <End Role="character" EntitySet="character" />
+          </AssociationSet>
+          <AssociationSet Name="fk_character_state" Association="Self.fk_character_state">
+            <End Role="cstate" EntitySet="cstate" />
+            <End Role="character" EntitySet="character" />
+          </AssociationSet>
+          <AssociationSet Name="fk_location_project" Association="Self.fk_location_project">
+            <End Role="project" EntitySet="project" />
+            <End Role="location" EntitySet="location" />
+          </AssociationSet>
+          <AssociationSet Name="fk_location_state" Association="Self.fk_location_state">
+            <End Role="cstate" EntitySet="cstate" />
+            <End Role="location" EntitySet="location" />
+          </AssociationSet>
+          <AssociationSet Name="fk_project_state" Association="Self.fk_project_state">
+            <End Role="cstate" EntitySet="cstate" />
+            <End Role="project" EntitySet="project" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="characterhdeleonModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="character">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_project" Type="Int32" Nullable="false" />
+          <Property Name="id_state" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="description" Type="String" MaxLength="10000" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="created_date" Type="DateTime" Nullable="false" />
+          <Property Name="id_father" Type="Int32" />
+          <Property Name="id_mother" Type="Int32" />
+          <NavigationProperty Name="character1" Relationship="Self.fk_character_fater" FromRole="character" ToRole="character1" />
+          <NavigationProperty Name="character2" Relationship="Self.fk_character_fater" FromRole="character1" ToRole="character" />
+          <NavigationProperty Name="character11" Relationship="Self.fk_character_mother" FromRole="character" ToRole="character1" />
+          <NavigationProperty Name="character3" Relationship="Self.fk_character_mother" FromRole="character1" ToRole="character" />
+          <NavigationProperty Name="project" Relationship="Self.fk_character_project_" FromRole="character" ToRole="project" />
+          <NavigationProperty Name="cstate" Relationship="Self.fk_character_state" FromRole="character" ToRole="cstate" />
+        </EntityType>
+        <EntityType Name="cstate">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="character" Relationship="Self.fk_character_state" FromRole="cstate" ToRole="character" />
+          <NavigationProperty Name="location" Relationship="Self.fk_location_state" FromRole="cstate" ToRole="location" />
+          <NavigationProperty Name="project" Relationship="Self.fk_project_state" FromRole="cstate" ToRole="project" />
+        </EntityType>
+        <EntityType Name="location">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="description" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="created_date" Type="DateTime" Nullable="false" />
+          <Property Name="id_state" Type="Int32" Nullable="false" />
+          <Property Name="id_project" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="cstate" Relationship="Self.fk_location_state" FromRole="location" ToRole="cstate" />
+          <NavigationProperty Name="project" Relationship="Self.fk_location_project" FromRole="location" ToRole="project" />
+        </EntityType>
+        <EntityType Name="project">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="id_state" Type="Int32" Nullable="false" />
+          <Property Name="created_date" Type="DateTime" Nullable="false" />
+          <NavigationProperty Name="character" Relationship="Self.fk_character_project_" FromRole="project" ToRole="character" />
+          <NavigationProperty Name="cstate" Relationship="Self.fk_project_state" FromRole="project" ToRole="cstate" />
+          <NavigationProperty Name="location" Relationship="Self.fk_location_project" FromRole="project" ToRole="location" />
+        </EntityType>
+        <Association Name="fk_character_fater">
+          <End Role="character" Type="Self.character" Multiplicity="0..1" />
+          <End Role="character1" Type="Self.character" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="character">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="character1">
+              <PropertyRef Name="id_father" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_character_mother">
+          <End Role="character" Type="Self.character" Multiplicity="0..1" />
+          <End Role="character1" Type="Self.character" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="character">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="character1">
+              <PropertyRef Name="id_mother" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_character_project_">
+          <End Role="project" Type="Self.project" Multiplicity="1" />
+          <End Role="character" Type="Self.character" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="project">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="character">
+              <PropertyRef Name="id_project" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_character_state">
+          <End Role="cstate" Type="Self.cstate" Multiplicity="1" />
+          <End Role="character" Type="Self.character" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cstate">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="character">
+              <PropertyRef Name="id_state" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_location_state">
+          <End Role="cstate" Type="Self.cstate" Multiplicity="1" />
+          <End Role="location" Type="Self.location" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cstate">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="location">
+              <PropertyRef Name="id_state" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_project_state">
+          <End Role="cstate" Type="Self.cstate" Multiplicity="1" />
+          <End Role="project" Type="Self.project" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="cstate">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="project">
+              <PropertyRef Name="id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_location_project">
+          <End Role="project" Type="Self.project" Multiplicity="1" />
+          <End Role="location" Type="Self.location" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="project">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="location">
+              <PropertyRef Name="id_project" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="characterhdeleonEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="character" EntityType="Self.character" />
+          <EntitySet Name="cstate" EntityType="Self.cstate" />
+          <EntitySet Name="location" EntityType="Self.location" />
+          <EntitySet Name="project" EntityType="Self.project" />
+          <AssociationSet Name="fk_character_fater" Association="Self.fk_character_fater">
+            <End Role="character" EntitySet="character" />
+            <End Role="character1" EntitySet="character" />
+          </AssociationSet>
+          <AssociationSet Name="fk_character_mother" Association="Self.fk_character_mother">
+            <End Role="character" EntitySet="character" />
+            <End Role="character1" EntitySet="character" />
+          </AssociationSet>
+          <AssociationSet Name="fk_character_project_" Association="Self.fk_character_project_">
+            <End Role="project" EntitySet="project" />
+            <End Role="character" EntitySet="character" />
+          </AssociationSet>
+          <AssociationSet Name="fk_character_state" Association="Self.fk_character_state">
+            <End Role="cstate" EntitySet="cstate" />
+            <End Role="character" EntitySet="character" />
+          </AssociationSet>
+          <AssociationSet Name="fk_location_state" Association="Self.fk_location_state">
+            <End Role="cstate" EntitySet="cstate" />
+            <End Role="location" EntitySet="location" />
+          </AssociationSet>
+          <AssociationSet Name="fk_project_state" Association="Self.fk_project_state">
+            <End Role="cstate" EntitySet="cstate" />
+            <End Role="project" EntitySet="project" />
+          </AssociationSet>
+          <AssociationSet Name="fk_location_project" Association="Self.fk_location_project">
+            <End Role="project" EntitySet="project" />
+            <End Role="location" EntitySet="location" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="characterhdeleonModelStoreContainer" CdmEntityContainer="characterhdeleonEntities">
+          <EntitySetMapping Name="character">
+            <EntityTypeMapping TypeName="characterhdeleonModel.character">
+              <MappingFragment StoreEntitySet="character">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="id_project" ColumnName="id_project" />
+                <ScalarProperty Name="id_state" ColumnName="id_state" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="created_date" ColumnName="created_date" />
+                <ScalarProperty Name="id_father" ColumnName="id_father" />
+                <ScalarProperty Name="id_mother" ColumnName="id_mother" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="cstate">
+            <EntityTypeMapping TypeName="characterhdeleonModel.cstate">
+              <MappingFragment StoreEntitySet="cstate">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="location">
+            <EntityTypeMapping TypeName="characterhdeleonModel.location">
+              <MappingFragment StoreEntitySet="location">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="created_date" ColumnName="created_date" />
+                <ScalarProperty Name="id_state" ColumnName="id_state" />
+                <ScalarProperty Name="id_project" ColumnName="id_project" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="project">
+            <EntityTypeMapping TypeName="characterhdeleonModel.project">
+              <MappingFragment StoreEntitySet="project">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id_state" ColumnName="id_state" />
+                <ScalarProperty Name="created_date" ColumnName="created_date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
